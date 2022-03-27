@@ -1,0 +1,209 @@
+import java.util.ArrayList;
+public class Say {
+    public ArrayList<String> units(long longNum, ArrayList<String> words){
+    int intNum = (int)longNum;
+    String stringUnit = "null";
+    switch(intNum){
+     case 0:
+          stringUnit = "zero";
+          break;
+      case 1:
+          stringUnit = "one";
+          break;
+      case 2:
+          stringUnit = "two";
+          break;
+      case 3:
+          stringUnit = "three";
+          break;
+      case 4:
+          stringUnit = "four";
+          break;
+      case 5:
+          stringUnit = "five";
+          break;
+      case 6:
+          stringUnit = "six";
+          break;
+      case 7:
+          stringUnit = "seven";
+          break;
+      case 8:
+          stringUnit = "eight";
+          break;
+      case 9:
+          stringUnit = "nine";
+          break;   
+    }
+    words.add(0, stringUnit);
+    return words;
+  }
+  public ArrayList<String> tens(long longNum, ArrayList<String> words){
+    //System.out.println(longNum);
+    int intNum = (int)longNum;
+    int intTen = intNum/10;
+    int intUnit = intNum%10;
+    String stringTen = "null";
+    if(intNum >= 10&&intNum < 20){
+      switch(intNum){
+        case 10:
+            stringTen = "ten";
+            break;
+        case 11:
+            stringTen = "eleven";
+            break;
+        case 12:
+            stringTen = "twelve";
+            break;
+        case 13:
+            stringTen = "thirteen";
+            break;
+        case 14:
+            stringTen = "fourteen";
+            break;
+        case 15:
+            stringTen = "fifteen";
+            break;
+        case 16:
+            stringTen = "sixteen";
+            break;
+        case 17:
+            stringTen = "seventeen";
+            break;
+        case 18:
+            stringTen = "eighteen";
+            break;
+        case 19:
+            stringTen = "ninteen";
+            break;
+      }
+    }else {
+      switch(intTen){
+        case 1:
+            stringTen = "teen";
+            break;
+        case 2:
+            stringTen = "twenty";
+            break;
+        case 3:
+            stringTen = "thirty";
+            break;
+        case 4:
+            stringTen = "forty";
+            break;
+        case 5:
+            stringTen = "fifty";
+            break;
+        case 6:
+            stringTen = "sixty";
+            break;
+        case 7:
+            stringTen = "seventy";
+            break;
+        case 8:
+            stringTen = "eighty";
+            break;
+        case 9:
+            stringTen = "ninty";
+            break;
+      }
+    }
+    if(longNum < 10){
+      units(intUnit, words);
+    }else if(intUnit == 0){
+      words.add(0, stringTen);
+    }else if(intNum >= 10&&intNum < 20){
+      words.add(0, stringTen);
+    }else{
+      units(intUnit, words);
+      words.add(0, stringTen);
+      String word = String.join("-", words.get(0), words.get(1));
+      words.remove(0);
+      words.remove(0);
+      words.add(0, word);
+      }
+    return words;
+  }
+  public ArrayList<String> hunds(long longNum, ArrayList<String> words){
+    long longHund = longNum/100;
+    long longTen = longNum%100;
+    if(longNum < 100){
+      tens(longTen, words);
+    }else if(longTen == 0){
+      words.add(0, "hundred");
+      units(longHund, words);
+    }else{
+      tens(longTen, words);
+      words.add(0,"hundred");
+      units(longHund, words);
+    }
+    return words;
+  }
+  public ArrayList<String> hundThous(long longNum, ArrayList<String> words){    
+    long longHundThou = longNum/1000;
+    long longHund = longNum%1000;
+    if(longNum < 1000){
+      hunds(longHund, words);
+    }else if(longHund == 0){
+      hunds(longHundThou, words);
+      words.add("thousand");
+    }else{
+      hunds(longHund, words);
+      words.add(0,"thousand");
+      hunds(longHundThou, words);
+    }
+    return words;
+  }
+  public ArrayList<String> hundMills(long longNum, ArrayList<String> words){
+    long longHundMill = longNum/1000000;
+    long longHundThou = longNum%1000000;
+    if(longNum < 1000000){
+      hundThous(longHundThou, words);
+    }else if(longHundThou == 0){
+      hunds(longHundMill, words);
+      words.add("million");
+    }else{
+      hundThous(longHundThou, words);
+      words.add(0,"million");
+      hunds(longHundMill, words);
+    }
+    return words;
+  }
+  public ArrayList<String> hundBill(long longNum, ArrayList<String> words){
+    long longHundBill = longNum/1000000000;
+    long longHundMill = longNum%1000000000;
+    if(longNum < 1000000){
+      hundMills(longHundMill, words);
+    }else if(longHundMill == 0){
+      hunds(longHundBill, words);
+      words.add("billion");
+    }else{
+      hundMills(longHundMill, words);
+      words.add(0,"billion");
+      hunds(longHundBill, words);
+    }
+    return words;
+  }
+    
+    public String say(long longNum) {
+        ArrayList<String> words = new ArrayList<String>();
+        Say inputInt = new Say();
+        if(longNum >= 0&&longNum < 1000){
+            inputInt.hunds(longNum, words);
+        }else if(longNum >= 1000&&longNum < 1000000){
+            inputInt.hundThous(longNum, words);
+        }else if(longNum >= 1000000&&longNum < 1000000000){
+            inputInt.hundMills(longNum, words);
+        }else if(longNum >= 1000000000&&longNum < 1000000000000L){
+            inputInt.hundBill(longNum, words);
+        }else {
+            throw new IllegalArgumentException();
+            }
+        
+        String word = String.join(" ", words);
+        return word;
+        
+    }
+    
+    
+}
