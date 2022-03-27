@@ -1,0 +1,22 @@
+public class Lasagna {
+    public static int remaining;
+    public static int expected;
+    public static int prep;
+    public static int total;
+
+    public int expectedMinutesInOven(){
+        expected = 40;
+        return(expected);
+    }
+    public int remainingMinutesInOven(int ovenTime){
+        remaining = 40 - ovenTime;
+        return(remaining);      
+    }
+    public int preparationTimeInMinutes(int layerNum){
+        prep = layerNum*2;
+        return(prep);
+    }
+    public int totalTimeInMinutes(int layerNum, int ovenTime){
+        total = layerNum*2 + ovenTime;
+        return(total);
+    }
