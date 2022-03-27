@@ -1,0 +1,22 @@
+class DifferenceOfSquaresCalculator {
+    int computeSquareOfSumTo(int input) {
+        int totalSumOfSquaresTo = 0;
+        for(int i = 1; i <= input; i++) {
+            totalSumOfSquaresTo = totalSumOfSquaresTo + i;
+            }
+        return totalSumOfSquaresTo*totalSumOfSquaresTo;
+    }
+    int computeSumOfSquaresTo(int input) {
+        int totalSquareOfSumTo = 0;
+        for(int i = 1; i <= input; i++) {
+            totalSquareOfSumTo = totalSquareOfSumTo + i*i;
+            }
+        return totalSquareOfSumTo;
+        
+    }
+    int computeDifferenceOfSquares(int input) {
+        DifferenceOfSquaresCalculator calculation = new DifferenceOfSquaresCalculator();
+        return(calculation.computeSquareOfSumTo(input) - calculation.computeSumOfSquaresTo(input));
+        
+    }
+}
